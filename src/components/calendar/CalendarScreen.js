@@ -5,6 +5,7 @@ import moment from 'moment';
 import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { messages } from '../../helpers/calendar-messages-es';
+import { CalendarEvent } from './CalendarEvent';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
@@ -15,7 +16,11 @@ const events = [
     start: moment().toDate(),
     end: moment().add(2, 'hours').toDate(),
     bgcolor: '#fafafa',
-    notes: 'Buy the cake'
+    notes: 'Buy the cake',
+    user: {
+      _id: '123',
+      name: 'Alejo'
+    }
   }
 ];
 
@@ -45,6 +50,7 @@ export const CalendarScreen = () => {
         endAccessor='end'
         messages={messages}
         eventPropGetter={eventStyleGetter}
+        components={{ event: CalendarEvent }}
       />
     </div>
   );
