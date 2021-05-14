@@ -25,6 +25,15 @@ const events = [
 ];
 
 export const CalendarScreen = () => {
+  const [lastView, setLastView] = React.useState(localStorage.getItem('lastView') || 'month');
+
+  const onDoubleClick = (e) => {};
+  const onSelectEvent = (e) => {};
+  const onViewChange = (e) => {
+    setLastView(e);
+    localStorage.setItem('lastView', e);
+  };
+
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
       backgroundColor: '#367CF7',
@@ -51,6 +60,10 @@ export const CalendarScreen = () => {
         messages={messages}
         eventPropGetter={eventStyleGetter}
         components={{ event: CalendarEvent }}
+        onDoubleClickEvent={onDoubleClick}
+        onSelectEvent={onSelectEvent}
+        onView={onViewChange}
+        view={lastView}
       />
     </div>
   );
