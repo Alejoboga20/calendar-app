@@ -35,14 +35,21 @@ export const CalendarModal = () => {
 
   const handleStartDateChange = (e) => {
     setDateStart(e);
+    setFormValues({ ...formValues, start: e });
   };
 
   const handleEndDateChange = (e) => {
     setDateEnd(e);
+    setFormValues({ ...formValues, end: e });
   };
 
   const handleInputChange = ({ target }) => {
     setFormValues({ ...formValues, [target.name]: target.value });
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log(formValues);
   };
 
   return (
@@ -55,7 +62,7 @@ export const CalendarModal = () => {
       overlayClassName='modal-fondo'>
       <h1> Nuevo evento </h1>
       <hr />
-      <form className='container'>
+      <form className='container' onSubmit={handleSubmitForm}>
         <div className='form-group'>
           <label>Fecha y hora inicio</label>
           <DateTimePicker
