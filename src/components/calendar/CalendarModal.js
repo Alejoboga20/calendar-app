@@ -22,6 +22,7 @@ const nowPlus1 = now.clone().add(1, 'hours');
 export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(nowPlus1.toDate());
+  const [titleValid, setTitleValid] = useState(true);
 
   const [formValues, setFormValues] = useState({
     title: 'Evento',
@@ -57,6 +58,12 @@ export const CalendarModal = () => {
     if (momentStart.isSameOrAfter(momentEnd)) {
       return Swal.fire('Error', 'End Date should be greater than Start Date', 'error');
     }
+
+    if (title.trim().length < 2) {
+      return setTitleValid(false);
+    }
+    setTitleValid(true);
+    closeModal();
   };
 
   return (
@@ -94,7 +101,7 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type='text'
-            className='form-control'
+            className={`form-control ${!titleValid && 'is-invalid'}`}
             placeholder='Título del evento'
             name='title'
             autoComplete='off'
