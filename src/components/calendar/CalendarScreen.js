@@ -10,6 +10,7 @@ import { uiOpenModal } from '../../actions/ui';
 import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { eventSetActive } from '../../actions/events';
+import { AddNewFab } from '../ui/AddNewFab';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
@@ -39,6 +40,7 @@ export const CalendarScreen = () => {
   const onSelectEvent = (e) => {
     console.log(e);
     dispatch(eventSetActive(e));
+    dispatch(uiOpenModal());
   };
 
   const onViewChange = (e) => {
@@ -79,6 +81,7 @@ export const CalendarScreen = () => {
       />
 
       <CalendarModal />
+      <AddNewFab />
     </div>
   );
 };
