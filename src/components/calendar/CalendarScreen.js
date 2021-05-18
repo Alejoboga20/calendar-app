@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { eventSetActive } from '../../actions/events';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
@@ -35,7 +36,11 @@ export const CalendarScreen = () => {
     dispatch(uiOpenModal());
   };
 
-  const onSelectEvent = (e) => {};
+  const onSelectEvent = (e) => {
+    console.log(e);
+    dispatch(eventSetActive(e));
+  };
+
   const onViewChange = (e) => {
     setLastView(e);
     localStorage.setItem('lastView', e);
