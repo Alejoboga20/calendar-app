@@ -1,14 +1,14 @@
 import React from 'react';
+import moment from 'moment';
 import { Navbar } from '../ui/Navbar';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'moment/locale/es';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { messages } from '../../helpers/calendar-messages-es';
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
+import 'moment/locale/es';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
