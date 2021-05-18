@@ -22,6 +22,15 @@ export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(nowPlus1.toDate());
 
+  const [formValues, setFormValues] = useState({
+    title: 'Evento',
+    notes: '',
+    start: now.toDate(),
+    end: nowPlus1.toDate()
+  });
+
+  const { notes, title } = formValues;
+
   const closeModal = () => {};
 
   const handleStartDateChange = (e) => {
@@ -30,6 +39,10 @@ export const CalendarModal = () => {
 
   const handleEndDateChange = (e) => {
     setDateEnd(e);
+  };
+
+  const handleInputChange = ({ target }) => {
+    setFormValues({ ...formValues, [target.name]: target.value });
   };
 
   return (
@@ -71,6 +84,8 @@ export const CalendarModal = () => {
             placeholder='Título del evento'
             name='title'
             autoComplete='off'
+            value={title}
+            onChange={handleInputChange}
           />
           <small id='emailHelp' className='form-text text-muted'>
             Una descripción corta
@@ -83,7 +98,9 @@ export const CalendarModal = () => {
             className='form-control'
             placeholder='Notas'
             rows='5'
-            name='notes'></textarea>
+            name='notes'
+            value={notes}
+            onChange={handleInputChange}></textarea>
           <small id='emailHelp' className='form-text text-muted'>
             Información adicional
           </small>
