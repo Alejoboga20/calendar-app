@@ -15,20 +15,6 @@ import { AddNewFab } from '../ui/AddNewFab';
 moment.locale('es');
 const localizer = momentLocalizer(moment);
 
-/* const events = [
-  {
-    title: 'Happy Birthday Boss',
-    start: moment().toDate(),
-    end: moment().add(2, 'hours').toDate(),
-    bgcolor: '#fafafa',
-    notes: 'Buy the cake',
-    user: {
-      _id: '123',
-      name: 'Alejo'
-    }
-  }
-]; */
-
 export const CalendarScreen = () => {
   const [lastView, setLastView] = React.useState(localStorage.getItem('lastView') || 'month');
   const dispatch = useDispatch();
