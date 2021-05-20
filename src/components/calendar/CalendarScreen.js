@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { eventSetActive } from '../../actions/events';
+import { eventClearActiveEvent, eventSetActive } from '../../actions/events';
 import { AddNewFab } from '../ui/AddNewFab';
 import { DeleteEventFab } from '../ui/DeleteEventFab';
 
@@ -32,6 +32,10 @@ export const CalendarScreen = () => {
   const onViewChange = (e) => {
     setLastView(e);
     localStorage.setItem('lastView', e);
+  };
+
+  const onSelectSlot = (e) => {
+    dispatch(eventClearActiveEvent());
   };
 
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -63,6 +67,8 @@ export const CalendarScreen = () => {
         onSelectEvent={onSelectEvent}
         onView={onViewChange}
         view={lastView}
+        onSelectSlot={onSelectSlot}
+        selectable={true}
       />
       <CalendarModal />
       <AddNewFab />
