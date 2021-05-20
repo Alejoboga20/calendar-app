@@ -11,6 +11,7 @@ import 'moment/locale/es';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { eventSetActive } from '../../actions/events';
 import { AddNewFab } from '../ui/AddNewFab';
+import { DeleteEventFab } from '../ui/DeleteEventFab';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
@@ -18,7 +19,7 @@ const localizer = momentLocalizer(moment);
 export const CalendarScreen = () => {
   const [lastView, setLastView] = React.useState(localStorage.getItem('lastView') || 'month');
   const dispatch = useDispatch();
-  const { events } = useSelector((state) => state.calendar);
+  const { events, activeEvent } = useSelector((state) => state.calendar);
 
   const onDoubleClick = (e) => {
     dispatch(uiOpenModal());
@@ -50,7 +51,6 @@ export const CalendarScreen = () => {
   return (
     <div className='calendar-screen'>
       <Navbar />
-
       <Calendar
         localizer={localizer}
         events={events}
@@ -64,9 +64,9 @@ export const CalendarScreen = () => {
         onView={onViewChange}
         view={lastView}
       />
-
       <CalendarModal />
       <AddNewFab />
+      {activeEvent && <DeleteEventFab />}
     </div>
   );
 };
