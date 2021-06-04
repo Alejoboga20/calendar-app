@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { startLogin } from '../../actions/auth';
 import useForm from '../../hooks/useForm';
 import './login.css';
 
@@ -8,6 +10,7 @@ const initialLoginState = {
 };
 
 export const LoginScreen = () => {
+  const dispatch = useDispatch();
   const [formLoginValues, handleLoginInputChange] = useForm(initialLoginState);
 
   const { lEmail, lPassword } = formLoginValues;
@@ -16,6 +19,7 @@ export const LoginScreen = () => {
     e.preventDefault();
 
     console.log(formLoginValues);
+    dispatch(startLogin(lEmail, lPassword));
   };
 
   return (
