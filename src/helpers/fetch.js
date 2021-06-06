@@ -20,15 +20,12 @@ export const fetchWithToken = (endpoint, data, method = 'GET') => {
   const url = `${baseUrl}/${endpoint}`;
 
   if (method === 'GET') {
-    return (
-      fetch(url),
-      {
-        method,
-        headers: {
-          'x-token': localStorage.getItem('token') || ''
-        }
+    return fetch(url, {
+      method,
+      headers: {
+        'x-token': localStorage.getItem('token') || ''
       }
-    );
+    });
   } else {
     return fetch(url, {
       method,
