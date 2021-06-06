@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { fetchWithoutToken } from '../helpers/fetch';
+import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 import { types } from '../types/types';
 
 export const startLogin = (email, password) => {
@@ -47,6 +47,28 @@ export const startRegister = (name, email, password) => {
     }
   };
 };
+
+export const startChecking = () => {
+  return async (dispatch) => {
+    const response = await fetchWithToken('auth/renew');
+
+    const body = await response.json();
+
+    if (body.ok) {
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('token-init-date', new Date().getTime());
+
+      const { uid, name } = body;
+
+      dispatch(login({ uid, name }));
+    } else {
+      Swal.fire('Error', body.msg, 'error');
+      dispatch(checkingFinish());
+    }
+  };
+};
+
+const checkingFinish = () => ({ type: types.authCheckingFinish });
 
 const login = (user) => ({
   type: types.authLogin,
