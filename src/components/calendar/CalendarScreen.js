@@ -22,7 +22,6 @@ export const CalendarScreen = () => {
   );
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector((state) => state.calendar);
-  const { name } = useSelector((state) => state.auth);
 
   const onDoubleClick = (e) => {
     dispatch(uiOpenModal());
@@ -57,7 +56,7 @@ export const CalendarScreen = () => {
 
   return (
     <div className='calendar-screen'>
-      <Navbar name={name} />
+      <Navbar />
       <Calendar
         localizer={localizer}
         events={events}
