@@ -17,9 +17,12 @@ moment.locale('es');
 const localizer = momentLocalizer(moment);
 
 export const CalendarScreen = () => {
-  const [lastView, setLastView] = React.useState(localStorage.getItem('lastView') || 'month');
+  const [lastView, setLastView] = React.useState(
+    localStorage.getItem('lastView') || 'month'
+  );
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector((state) => state.calendar);
+  const { name } = useSelector((state) => state.auth);
 
   const onDoubleClick = (e) => {
     dispatch(uiOpenModal());
@@ -54,7 +57,7 @@ export const CalendarScreen = () => {
 
   return (
     <div className='calendar-screen'>
-      <Navbar />
+      <Navbar name={name} />
       <Calendar
         localizer={localizer}
         events={events}
