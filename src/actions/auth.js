@@ -62,7 +62,6 @@ export const startChecking = () => {
 
       dispatch(login({ uid, name }));
     } else {
-      Swal.fire('Error', body.msg, 'error');
       dispatch(checkingFinish());
     }
   };
