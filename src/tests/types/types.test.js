@@ -1,0 +1,26 @@
+import { types } from '../../types/types';
+
+describe('types tests', () => {
+  test('should match types', () => {
+    expect(types).toEqual({
+      uiOpenModal: '[ui] Open Modal',
+      uiClosModal: '[ui] Close Modal',
+
+      eventStartAddNew: '[event] Start add new',
+      eventAddNew: '[event] Add new',
+      eventSetActive: '[event] Set Active',
+      eventClearActiveEvent: '[event] Clear Active event',
+      eventUpdated: '[event] Event update',
+      eventDeleted: '[event] Event deleted',
+      eventLoaded: '[event] Event Loaded',
+      eventLogout: '[event] Event Logout',
+
+      authCheckingFinish: '[auth] Finish checking login state',
+      authStartLogin: '[auth] Start login',
+      authLogin: '[auth] Login',
+      authStartRegister: '[auth] Start Register',
+      authStartTokenRenew: '[auth] Start token renew',
+      authLogout: '[auth] Logout'
+    });
+  });
+});
