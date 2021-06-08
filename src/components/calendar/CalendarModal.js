@@ -5,7 +5,11 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../actions/events';
+import {
+  eventClearActiveEvent,
+  eventStartAddNew,
+  eventUpdated
+} from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -33,8 +37,10 @@ export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(nowPlus1.toDate());
   const [titleValid, setTitleValid] = useState(true);
+
   const { modalOpen } = useSelector((state) => state.ui);
   const { activeEvent } = useSelector((state) => state.calendar);
+
   const dispatch = useDispatch();
 
   const [formValues, setFormValues] = useState(initEvent);
@@ -75,7 +81,11 @@ export const CalendarModal = () => {
     const momentEnd = moment(end);
 
     if (momentStart.isSameOrAfter(momentEnd)) {
-      return Swal.fire('Error', 'End Date should be greater than Start Date', 'error');
+      return Swal.fire(
+        'Error',
+        'End Date should be greater than Start Date',
+        'error'
+      );
     }
 
     if (title.trim().length < 2) {
@@ -85,16 +95,7 @@ export const CalendarModal = () => {
     if (activeEvent) {
       dispatch(eventUpdated(formValues));
     } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getTime(),
-          user: {
-            _id: '123',
-            name: 'Alejo'
-          }
-        })
-      );
+      dispatch(eventStartAddNew(formValues));
     }
 
     setTitleValid(true);
@@ -108,7 +109,8 @@ export const CalendarModal = () => {
       style={customStyles}
       closeTimeoutMS={200}
       className='modal'
-      overlayClassName='modal-fondo'>
+      overlayClassName='modal-fondo'
+    >
       <h1> {activeEvent ? 'Edit Event' : 'New Event'} </h1>
       <hr />
       <form className='container' onSubmit={handleSubmitForm}>
@@ -156,7 +158,8 @@ export const CalendarModal = () => {
             rows='5'
             name='notes'
             value={notes}
-            onChange={handleInputChange}></textarea>
+            onChange={handleInputChange}
+          ></textarea>
           <small id='emailHelp' className='form-text text-muted'>
             Información adicional
           </small>
