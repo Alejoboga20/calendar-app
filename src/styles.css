@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-flow: column;
   height: 100vh;
-  color: white;
+  color: black;
 }
 
 .rbc-calendar {
