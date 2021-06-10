@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import '@testing-library/jest-dom';
-import { startLogin, startRegister } from '../../actions/auth';
+import { startChecking, startLogin, startRegister } from '../../actions/auth';
 import { types } from '../../types/types';
 import Swal from 'sweetalert2';
 import * as fetchModule from '../../helpers/fetch';
@@ -76,6 +76,38 @@ describe('auth actions tests', () => {
     );
 
     const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: types.authLogin,
+      payload: {
+        uid: 'test',
+        name: 'testUser'
+      }
+    });
+
+    expect(localStorage.setItem).toHaveBeenCalledWith('token', 'ABCD1234');
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'token-init-date',
+      expect.any(Number)
+    );
+  });
+
+  test('should startChecking', async () => {
+    fetchModule.fetchWithToken = jest.fn(() => ({
+      json() {
+        return {
+          ok: true,
+          uid: 'test',
+          name: 'testUser',
+          token: 'ABCD1234'
+        };
+      }
+    }));
+
+    await store.dispatch(startChecking());
+
+    const actions = store.getActions();
+
     expect(actions[0]).toEqual({
       type: types.authLogin,
       payload: {
