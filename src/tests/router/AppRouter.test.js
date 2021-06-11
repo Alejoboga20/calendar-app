@@ -27,4 +27,50 @@ describe('AppRouter Tests', () => {
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('h5').exists()).toBe(true);
   });
+
+  test('should show PublicRoute and login-container', () => {
+    const initState = {
+      auth: {
+        checking: false,
+        uid: null
+      }
+    };
+
+    const store = mockStore(initState);
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    );
+
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('.login-container').exists()).toBe(true);
+  });
+
+  test('should show PrivateRoute and calendar', () => {
+    const initState = {
+      ui: {
+        modalOpen: false
+      },
+      auth: {
+        checking: false,
+        uid: 'ABC123'
+      },
+      calendar: {
+        events: []
+      }
+    };
+
+    const store = mockStore(initState);
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    );
+
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('.calendar-screen').exists()).toBe(true);
+  });
 });
