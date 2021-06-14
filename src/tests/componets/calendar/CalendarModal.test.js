@@ -26,7 +26,7 @@ const initState = {
     uid: 'ABC123'
   },
   ui: {
-    openModal: true
+    modalOpen: true
   }
 };
 const store = mockStore(initState);
