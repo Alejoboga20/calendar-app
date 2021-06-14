@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { CalendarScreen } from '../../../components/calendar/CalendarScreen';
 import { eventStartLoading } from '../../../actions/events';
+import { messages } from '../../../helpers/calendar-messages-es';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -37,5 +38,11 @@ const wrapper = mount(
 describe('CalendarScreen Tests', () => {
   test('should display properly', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test('should dispacth actions', () => {
+    const calendar = wrapper.find('Calendar');
+    const calendarMessages = calendar.prop('messages');
+    expect(calendarMessages).toEqual(messages);
   });
 });
