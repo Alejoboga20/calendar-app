@@ -53,23 +53,17 @@ describe('CalendarScreen Tests', () => {
 
     expect(calendarMessages).toEqual(messages);
 
-    calendar.prop('onDoubleClickEvent')();
-    expect(store.dispatch).toHaveBeenCalledWith({ type: types.uiOpenModal });
-  });
-
-  test('should dispatch setActiveEvent', () => {
-    const calendar = wrapper.find('Calendar');
-
     calendar.prop('onSelectEvent')({ start: 'Test' });
     expect(store.dispatch).toHaveBeenCalledWith({ start: 'Test' });
+
+    calendar.prop('onDoubleClickEvent')();
+    expect(store.dispatch).toHaveBeenCalledWith({ type: types.uiOpenModal });
   });
 
   test('should dispatch onView action', () => {
     const calendar = wrapper.find('Calendar');
 
-    act(() => {
-      calendar.prop('onView');
-      expect(localStorage.setItem).toHaveBeenCalledWith('lastView', 'week');
-    });
+    calendar.prop('onView');
+    expect(localStorage.setItem).toHaveBeenCalledWith('lastView', 'week');
   });
 });
