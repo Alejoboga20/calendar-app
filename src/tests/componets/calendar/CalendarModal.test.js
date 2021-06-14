@@ -44,6 +44,6 @@ const wrapper = mount(
 
 describe('CalendarModal Tests', () => {
   test('should show modal', () => {
-    expect(wrapper.find('.modal').exists()).toBe(true);
+    expect(wrapper.find('Modal').prop('isOpen')).toBe(true);
   });
 });
