@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { CalendarScreen } from '../../../components/calendar/CalendarScreen';
 import { eventStartLoading } from '../../../actions/events';
 import { messages } from '../../../helpers/calendar-messages-es';
+import { types } from '../../../types/types';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -43,6 +44,10 @@ describe('CalendarScreen Tests', () => {
   test('should dispacth actions', () => {
     const calendar = wrapper.find('Calendar');
     const calendarMessages = calendar.prop('messages');
+
     expect(calendarMessages).toEqual(messages);
+
+    calendar.prop('onDoubleClickEvent')();
+    expect(store.dispatch).toHaveBeenCalledWith({ type: types.uiOpenModal });
   });
 });
