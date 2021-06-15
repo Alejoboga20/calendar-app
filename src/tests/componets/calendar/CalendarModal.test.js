@@ -5,6 +5,10 @@ import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { CalendarModal } from '../../../components/calendar/CalendarModal';
+import {
+  eventStartUpdate,
+  eventClearActiveEvent
+} from '../../../actions/events';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -32,7 +36,10 @@ const initState = {
 const store = mockStore(initState);
 store.dispatch = jest.fn();
 
-jest.mock('../../../actions/events', () => ({}));
+jest.mock('../../../actions/events', () => ({
+  eventStartUpdate: jest.fn(),
+  eventClearActiveEvent: jest.fn()
+}));
 
 Storage.prototype.setItem = jest.fn();
 
@@ -45,5 +52,15 @@ const wrapper = mount(
 describe('CalendarModal Tests', () => {
   test('should show modal', () => {
     expect(wrapper.find('Modal').prop('isOpen')).toBe(true);
+  });
+
+  test('should call update and close modal', () => {
+    wrapper.find('form').simulate('submit', {
+      preventDefault() {}
+    });
+
+    expect(eventStartUpdate).toHaveBeenCalledWith(
+      initState.calendar.activeEvent
+    );
   });
 });
