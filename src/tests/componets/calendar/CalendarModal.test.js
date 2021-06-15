@@ -10,6 +10,8 @@ import {
   eventClearActiveEvent,
   eventStartAddNew
 } from '../../../actions/events';
+import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
+import Swal from 'sweetalert2';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -36,6 +38,10 @@ const initState = {
 };
 const store = mockStore(initState);
 store.dispatch = jest.fn();
+
+jest.mock('sweetalert2', () => ({
+  fire: jest.fn()
+}));
 
 jest.mock('../../../actions/events', () => ({
   eventStartUpdate: jest.fn(),
@@ -120,5 +126,23 @@ describe('CalendarModal Tests', () => {
     });
 
     expect(eventClearActiveEvent).toHaveBeenCalled();
+  });
+
+  test('should validate dates', () => {
+    const today = new Date();
+
+    act(() => {
+      wrapper.find('DateTimePicker').at(1).prop('onChange')(today);
+
+      wrapper.find('form').simulate('submit', {
+        preventDefault() {}
+      });
+    });
+
+    expect(Swal.fire).toHaveBeenCalledWith(
+      'Error',
+      'End Date should be greater than Start Date',
+      'error'
+    );
   });
 });
