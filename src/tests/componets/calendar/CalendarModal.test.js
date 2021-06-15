@@ -65,4 +65,14 @@ describe('CalendarModal Tests', () => {
 
     expect(eventClearActiveEvent).toHaveBeenCalled();
   });
+
+  test('should show error when no title is provided', () => {
+    wrapper.find('form').simulate('submit', {
+      preventDefault() {}
+    });
+
+    expect(wrapper.find('input[name="title"]'))
+      .toHaveClass('is-invalid')
+      .toBe(true);
+  });
 });
