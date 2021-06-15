@@ -118,5 +118,7 @@ describe('CalendarModal Tests', () => {
       start: expect.anything,
       notes: ''
     });
+
+    expect(eventClearActiveEvent).toHaveBeenCalled();
   });
 });
