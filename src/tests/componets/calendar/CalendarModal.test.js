@@ -62,5 +62,7 @@ describe('CalendarModal Tests', () => {
     expect(eventStartUpdate).toHaveBeenCalledWith(
       initState.calendar.activeEvent
     );
+
+    expect(eventClearActiveEvent).toHaveBeenCalled();
   });
 });
