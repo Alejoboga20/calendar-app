@@ -7,7 +7,8 @@ import { Provider } from 'react-redux';
 import { CalendarModal } from '../../../components/calendar/CalendarModal';
 import {
   eventStartUpdate,
-  eventClearActiveEvent
+  eventClearActiveEvent,
+  eventStartAddNew
 } from '../../../actions/events';
 
 const middlewares = [thunk];
@@ -38,7 +39,8 @@ store.dispatch = jest.fn();
 
 jest.mock('../../../actions/events', () => ({
   eventStartUpdate: jest.fn(),
-  eventClearActiveEvent: jest.fn()
+  eventClearActiveEvent: jest.fn(),
+  eventStartAddNew: jest.fn()
 }));
 
 Storage.prototype.setItem = jest.fn();
@@ -74,5 +76,47 @@ describe('CalendarModal Tests', () => {
     expect(wrapper.find('input[name="title"]'))
       .toHaveClass('is-invalid')
       .toBe(true);
+  });
+
+  test('should create a new event', () => {
+    const initState = {
+      calendar: {
+        events: [],
+        activeEvent: null
+      },
+      auth: {
+        uid: 'ABC123',
+        name: 'TestUser'
+      },
+      ui: {
+        modalOpen: true
+      }
+    };
+    const store = mockStore(initState);
+    store.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <CalendarModal />
+      </Provider>
+    );
+
+    wrapper.find('input[name="title"]').simulate('change', {
+      target: {
+        name: 'title',
+        value: 'test title'
+      }
+    });
+
+    wrapper.find('form').simulate('submit', {
+      preventDefault() {}
+    });
+
+    expect(eventStartAddNew).toHaveBeenCalledWith({
+      title: 'test title',
+      end: expect.anything,
+      start: expect.anything,
+      notes: ''
+    });
   });
 });
